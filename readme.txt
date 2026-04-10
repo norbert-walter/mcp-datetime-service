@@ -6,7 +6,7 @@ This MCP Service present the date and time
 cd C:\Norbert_Privat\OpenPlotter\mcp-datetime-service\
 
 # Docker Image mcp-datetime-service erstellen !!!!Achtung!!! Den Punkt am Ende nicht vergessen!!!!
-docker build -t mcp-datetime-service:1.0.0 .
+docker build -t mcp-datetime-service:1.0.1 .
 
 # Docker Container mcp-datetime-service container stoppen
 docker rm -f mcp-datetime-service
@@ -14,21 +14,21 @@ docker rm -f mcp-datetime-service
 # Docker Container testen, ob Antwort korrekt kommt
 # Für Docker.Desktop (PowerShell)
 @'
-{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"manual-test","version":"1.0.0"}}}
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"manual-test","version":"1.0.1"}}}
 {"jsonrpc":"2.0","method":"notifications/initialized"}
 {"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"current_date","arguments":{}}}
-'@ | docker run -i --rm mcp-datetime-service:1.0.0
+'@ | docker run -i --rm mcp-datetime-service:1.0.1
 # Für Linux Konsole
 (
-  echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"manual-test","version":"1.0.0"}}}'
+  echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"manual-test","version":"1.0.1"}}}'
   echo '{"jsonrpc":"2.0","method":"notifications/initialized"}'
   echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
-) | docker run -i --rm mcp-datetime-service:1.0.0
+) | docker run -i --rm mcp-datetime-service:1.0.1
 
 # Lokales Docker Image in Remote Docker Image für Github umladen und Tag setzen
-docker tag mcp-datetime-service:1.0.0 openboatprojects/mcp-datetime-service:1.0.0
+docker tag mcp-datetime-service:1.0.1 openboatprojects/mcp-datetime-service:1.0.1
 
 # Docker Image nach DockerHub hochladen
 # In Docker.Desktop die Push-Funktion (Push to Docker Hub) benutzen und Image hochladen
-docker push openboatprojects/mcp-datetime-service:1.0.0
+docker push openboatprojects/mcp-datetime-service:1.0.1
 
