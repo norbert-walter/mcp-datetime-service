@@ -1,47 +1,26 @@
 #!/usr/bin/env python3
-import asyncio
 from datetime import datetime
-from mcp.server import Server
-from mcp.types import Tool, ToolResponse
+from mcp.server.fastmcp import FastMCP
 
-server = Server("multi-time-service")
+mcp = FastMCP("multi-time-service")
 
-@server.tool(
-    Tool(
-        name="current_datetime",
-        description="Gibt das aktuelle Datum und die Uhrzeit zurück.",
-        input_schema={"type": "object", "properties": {}}
-    )
-)
-async def current_datetime(_input):
+@mcp.tool()
+def current_datetime() -> str:
+    """Returns the current UTC system date and time as a formatted string."""
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return ToolResponse(content=f"Aktuelle Zeit: {now}")
+    return f"Current date and time: {now}"
 
-@server.tool(
-    Tool(
-        name="current_date",
-        description="Gibt das aktuelle Datum zurück.",
-        input_schema={"type": "object", "properties": {}}
-    )
-)
-async def current_date(_input):
+@mcp.tool()
+def current_date() -> str:
+    """Returns the current UTC system date as a formatted string."""
     today = datetime.now().strftime("%Y-%m-%d")
-    return ToolResponse(content=f"Heutiges Datum: {today}")
+    return f"Current date: {today}"
 
-@server.tool(
-    Tool(
-        name="current_time",
-        description="Gibt die aktuelle Uhrzeit zurück.",
-        input_schema={"type": "object", "properties": {}}
-    )
-)
-async def current_time(_input):
-    time = datetime.now().strftime("%H:%M:%S")
-    return ToolResponse(content=f"Aktuelle Uhrzeit: {time}")
-
-async def main():
-    await server.run_stdio()
+@mcp.tool()
+def current_time() -> str:
+    """Returns the current UTC system time as a formatted string."""
+    current = datetime.now().strftime("%H:%M:%S")
+    return f"Current time: {current}"
 
 if __name__ == "__main__":
-    asyncio.run(main())
-
+    mcp.run()
